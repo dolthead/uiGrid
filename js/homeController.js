@@ -8,19 +8,10 @@
 
     function homeController(homeService) {
 
-        // list everything
+        // grid (and its data) are in the service for persistence
         var hc = this;
-        hc.sometext = homeService.getText();
-        hc.clearText = clearText;
-        hc.updateText = updateText;
+        hc.myGrid = homeService.myGrid;
 
-        // define functions
-        function clearText() {
-            hc.sometext = homeService.clearText();
-        }
-        function updateText() {
-            homeService.setText(hc.sometext);
-        }
     }
 
 }());

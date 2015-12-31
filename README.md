@@ -1,2 +1,2 @@
-# ngBootSeed
-Angular Bootstrap Seed, with UI Router
+# uiGrid
+Demo using Angular, Bootstrap, UI Router and uiGrid

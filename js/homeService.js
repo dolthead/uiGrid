@@ -4,28 +4,60 @@
     angular.module('homeService', [])
         .service('homeService', homeService);
 
-    homeService.$inject = [];
+    homeService.$inject = ['$http', 'uiGridConstants'];
 
-    function homeService() {
+    function homeService($http, uiGridConstants) {
 
         // list everything
         var hs = this;
-        hs.sometext = 'default value';
-        hs.getText = getText;
-        hs.clearText = clearText;
-        hs.setText = setText;
+        hs.myGrid = {
+            data: undefined,
+            enableFiltering: true,
+            enableFullRowSelection: true,
+            showColumnFooter: true,
+            columnDefs: [
+                { field: 'name' },
+                { field: 'company' },
+                { field: 'email', name: 'emailAddress',
+                    cellTemplate: '<a class="text-input" ng-href="mailto:{{ row.entity.email }}" ng-click="$event.stopPropagation()">'
+                        + '{{ row.entity.email }}</a>' },
+                { field: 'phone' },
+                { field: 'balance', width: 120 },
+                { field: 'age', width: 70, aggregationType: uiGridConstants.aggregationTypes.avg },
+                { field: 'about', enableSorting: false,
+                    cellTooltip: function(row, col) {
+                        return row.entity.about;
+                    }
+                },
+                // unused fields from json file
+                //{ field: 'id' },
+                //{ field: 'guid' },
+                //{ field: 'isActive' },
+                //{ field: 'registration' },
+                //{ field: 'friends' },
+                //{ field: 'picture' },
+                //{ field: 'gender' },
+                //{ field: 'address' },
+            ],
+            paginationPageSizes: [25, 50, 75],
+            paginationPageSize: 25
+        };
 
-        // define functions
-        function getText() {
-            return hs.sometext;
+        getData().then(function(data){
+            hs.myGrid.data = data;
+        });
+
+        // private function
+        function getData() {
+            return $http.get('http://ui-grid.info/data/500_complex.json')
+                .then(function (response) {
+                    response.data.forEach(function (row) {
+                        row.registered = Date.parse(row.registered);
+                    });
+                    return response.data;
+                });
         }
-        function clearText() {
-            hs.sometext = '';
-            return hs.sometext;
-        }
-        function setText(text) {
-            hs.sometext = text;
-        }
+
     }
 
 }());
