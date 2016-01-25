@@ -10,6 +10,7 @@
 
         // list everything
         var hs = this;
+        //hs.myGrid = { data: undefined };
         hs.myGrid = {
             data: undefined,
             enableFiltering: true,
@@ -54,6 +55,7 @@
                     response.data.forEach(function (row) {
                         row.registered = Date.parse(row.registered);
                     });
+                    console.log(response.data[0]);
                     return response.data;
                 });
         }
