@@ -5,16 +5,27 @@
         "ui.router",
         "navController",
         "homeController",
+        //"personController",
         "homeService",
         "ui.grid",
         "ui.grid.selection",
-        "ui.grid.edit",
-        "ui.grid.pagination",
-        "ui.grid.resizeColumns"
+        "ui.grid.resizeColumns",
+        "ne.swapi",
+        "ngDialog",
+        "toastr",
+        "ngAnimate"
     ])
 
-    .config(["$stateProvider", "$urlRouterProvider",
-        function ($stateProvider, $urlRouterProvider) {
+    .config(["$stateProvider", "$urlRouterProvider", "ngDialogProvider",
+        function ($stateProvider, $urlRouterProvider, ngDialogProvider) {
+
+            ngDialogProvider.setDefaults( {
+                className:  'ngdialog-theme-default',
+                plain:  true,
+                showClose:  true,
+                closeByDocument:  true,
+                closeByEscape:  true
+            });
 
             // define all app states (pages)
             $stateProvider
